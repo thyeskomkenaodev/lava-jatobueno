@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Bueno Lava-jato</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS - Estilos principais */
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #1a1a1a;
+            --accent-color: #ff0000;
+            --light-color: #f5f5f5;
+            --dark-color: #0d0d0d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--light-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--dark-color);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem; /* Adiciona espaçamento lateral consistente */
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        .logo span {
+            color: var(--light-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1607860108855-64acf2078ed9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: clamp(2.2rem, 5vw, 3rem); /* Fonte fluida que se adapta ao tamanho da tela */
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .services {
+            padding: 5rem 0;
+            background-color: var(--dark-color);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 25%;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .service-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .about {
+            padding: 5rem 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .booking {
+            padding: 5rem 0;
+            background-color: var(--dark-color);
+        }
+        
+        .booking-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+        
+        .booking-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .booking-info h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .booking-info p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+            margin-top: 5px;
+        }
+        
+        .booking-form {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .booking-form h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light-color);
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: 2px solid var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .contact {
+            padding: 5rem 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .contact-info h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--dark-color);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        
+        .contact-form h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p, 
+        .footer-section a {
+            color: var(--light-color);
+            opacity: 0.8;
+            display: block;
+            margin-bottom: 0.8rem;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            color: var(--light-color);
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .copyright {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Botão de WhatsApp */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            background-color: #128C7E;
+        }
+        
+        /* Botão do Instagram */
+        .instagram-btn {
+            position: fixed;
+            bottom: 100px; /* Posição acima do botão de WhatsApp */
+            right: 30px;
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 998;
+            transition: transform 0.3s;
+        }
+
+        .instagram-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--dark-color);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h2 {
+                line-height: 1.3; /* Melhora o espaçamento caso o texto quebre em duas linhas */
+            }
+
+            .typing-effect {
+                white-space: normal; /* Permite a quebra de linha em telas pequenas */
+                border-right: none; /* Remove o cursor piscando da animação */
+                animation: none; /* Desativa a animação de digitação no mobile para evitar quebra de layout */
+                display: block; /* Garante que o elemento se comporte bem ao quebrar a linha */
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .whatsapp-btn, .instagram-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.8rem;
+                right: 20px;
+            }
+
+            .whatsapp-btn {
+                bottom: 20px;
+            }
+
+            .instagram-btn {
+                bottom: 80px; /* 20px (bottom) + 50px (height) + 10px (gap) */
+            }
+        }
+        
+        /* Animação de digitação */
+        .typing-effect {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 3px solid var(--primary-color);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 2px;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-color) }
+        }
+        
+        /* Efeito de rolagem suave */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="logotipo.jpg" alt="Bueno Lava-jato Logo">
+                    <h1>BUENO <span>LAVA-JATO</span></h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="#about">Sobre Nós</a></li>
+                    <li><a href="#booking">Agendamento</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção Hero -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="typing-effect">SEU CARRO LIMPO  <i class="fas fa-car" style="margin-left: 10px;"></i></h2>
+                <p>No Bueno Lava-jato, tratamos seu veículo com o cuidado que ele merece. Serviços profissionais de lavagem e detalhamento automotivo.</p>
+                <a href="#booking" class="btn">AGENDE SEU HORÁRIO</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Serviços -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>NOSSOS SERVIÇOS</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Lavagem Completa</h3>
+                    <p>Lavagem externa e interna completa, com produtos premium que protegem a pintura e o interior do seu veículo.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-spray-can"></i>
+                    <h3>Higienização</h3>
+                    <p>Remoção profunda de sujeira, ácaros e bactérias dos bancos, carpetes e todo interior do veículo.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-wind"></i>
+                    <h3>Polimento e Cristalização</h3>
+                    <p>Recuperação do brilho original da pintura com técnicas profissionais e produtos de alta qualidade.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-tint"></i>
+                    <h3>Vitrificação</h3>
+                    <p>Proteção duradoura para a pintura do seu carro, repelindo água, sujeira e protegendo contra UV.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-magic"></i>
+                    <h3>Detalhamento</h3>
+                    <p>Serviço completo que deixa seu carro com aparência de novo, cuidando de cada detalhe.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Proteção de Pintura</h3>
+                    <p>Aplicação de cerâmica ou polímeros que formam uma barreira protetora na pintura do veículo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Sobre Nós -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>SOBRE NÓS</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Bueno Lava-jato - Excelência em Limpeza Automotiva</h3>
+                    <p>Fundado em XXXX, o Bueno Lava-jato se tornou referência em serviços de lavagem e detalhamento automotivo na região. Nossa missão é proporcionar aos clientes uma experiência diferenciada, com atendimento personalizado e resultados excepcionais.</p>
+                    <p>Utilizamos apenas produtos de primeira linha e técnicas atualizadas para garantir a melhor proteção e limpeza para o seu veículo. Nossa equipe é composta por profissionais treinados e apaixonados por carros.</p>
+                    <p>No Bueno Lava-jato, seu veículo não é apenas mais um. Tratamos cada carro com a atenção e cuidado que ele merece, como se fosse nosso.</p>
+                    <a href="#booking" class="btn">AGENDE SEU HORÁRIO</a>
+                </div>
+                <div class="about-image">
+                    <img src="logotipo.jpg" alt="Equipe Bueno Lava Car">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Agendamento -->
+    <section id="booking" class="booking">
+        <div class="container">
+            <div class="section-title">
+                <h2>AGENDAMENTO</h2>
+            </div>
+            <div class="booking-container">
+                <div class="booking-info">
+                    <h3>Agende Seu Horário</h3>
+                    <p>No Bueno Lava-jato, oferecemos agendamento rápido e conveniente para todos os nossos serviços. Escolha o serviço desejado, selecione uma data e horário disponíveis e seu carro estará em boas mãos.</p>
+                    <p>Nossos horários de funcionamento são de segunda a sexta das 8h às 18h e sábados das 8h às 18h.</p>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <p>Tempo médio por serviço:</p>
+                            <p>Lavagem completa: 1-2 horas</p>
+                            <p>Higienização: 2-3 horas</p>
+                            <p>Detalhamento: 4-6 horas</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <p>Prefere agendar por telefone?</p>
+                            <p>Ligue para: (67) 99936-1566</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="booking-form">
+                    <h3>Formulário de Agendamento</h3>
+                    <form id="form-agendamento">
+                        <div class="form-group">
+                            <label for="nome-agendamento">Nome Completo</label>
+                            <input type="text" id="nome-agendamento" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone-agendamento">Telefone</label>
+                            <input type="tel" id="telefone-agendamento" name="telefone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="servico">Serviço Desejado</label>
+                            <select id="servico" name="servico" required>
+                                <option value="">Selecione um serviço</option>
+                                <option value="lavagem-completa">Lavagem Completa</option>
+                                <option value="higienizacao">Higienização</option>
+                                <option value="polimento">Polimento e Cristalização</option>
+                                <option value="vitrificacao">Vitrificação</option>
+                                <option value="detalhamento">Detalhamento Completo</option>
+                                <option value="protecao">Proteção de Pintura</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="date" id="data" name="data" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="hora">Horário</label>
+                            <input type="time" id="hora" name="hora" min="08:00" max="18:00" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="observacoes">Observações</label>
+                            <textarea id="observacoes" name="observacoes"></textarea>
+                        </div>
+                        <button type="submit" class="btn">CONFIRMAR AGENDAMENTO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Contato -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>CONTATO</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Entre em Contato</h3>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <p>Av. MANOEL VICENTE, 835</p>
+                            <p>CENTRO -  BRASILANDIA/MS</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <p>(67) 99936-1566 (WhatsApp)</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <p>contato@buenolavacar.com.br</p>
+                            <p>atendimento@buenolavacar.com.br</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <p>Segunda a Sexta: 08:00 - 18:00</p>
+                            <p>Sábado: 08:00 - 18:00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Envie uma Mensagem</h3>
+                    <form id="form-contato">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" name="mensagem" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">ENVIAR MENSAGEM</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Bueno Lava-jato</h3>
+                    <p>Excelência em limpeza automotiva. Seu carro merece o melhor tratamento.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/bueno_lavajato?igsh=MTljN2xzOXIyeDZ1bw==" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/5567999361566" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <a href="#home">Início</a>
+                    <a href="#services">Serviços</a>
+                    <a href="#about">Sobre Nós</a>
+                    <a href="#booking">Agendamento</a>
+                    <a href="#contact">Contato</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Horário de Funcionamento</h3>
+                    <p>Segunda a Sexta: 08:00 - 18:00</p>
+                    <p>Sábado: 08:00 - 18:00</p>
+                    <p>Domingo: Fechado</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 thyesko menão. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão do Instagram -->
+    <a href="https://www.instagram.com/bueno_lavajato?igsh=MTljN2xzOXIyeDZ1bw==" class="instagram-btn" target="_blank" title="Siga-nos no Instagram">
+        <i class="fab fa-instagram"></i>
+    </a>
+
+    <!-- Botão do WhatsApp -->
+    <a href="https://wa.me/5567999361566" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // Menu mobile
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenu.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Efeito de scroll suave para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Formulário de contato
+        const contactForm = document.getElementById('form-contato');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const telefone = document.getElementById('telefone').value;
+            const mensagemForm = document.getElementById('mensagem').value;
+            
+            const numeroWhatsApp = '5567999361566';
+            
+            let mensagem = `*Nova Mensagem de Contato - Site*\n\n`;
+            mensagem += `*Nome:* ${nome}\n`;
+            mensagem += `*E-mail:* ${email}\n`;
+            mensagem += `*Telefone:* ${telefone}\n`;
+            mensagem += `*Mensagem:* ${mensagemForm}\n`;
+            
+            const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+            
+            window.open(urlWhatsApp, '_blank');
+            
+            // Limpar formulário
+            contactForm.reset();
+        });
+        
+        // Formulário de agendamento
+        const bookingForm = document.getElementById('form-agendamento');
+        
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('nome-agendamento').value;
+            const telefone = document.getElementById('telefone-agendamento').value;
+            const servico = document.getElementById('servico').options[document.getElementById('servico').selectedIndex].text;
+            const data = document.getElementById('data').value;
+            const hora = document.getElementById('hora').value;
+            const observacoes = document.getElementById('observacoes').value;
+            
+            const numeroWhatsApp = '5567999361566';
+            
+            let mensagem = `*Novo Agendamento - Site*\n\n*Nome:* ${nome}\n*Telefone:* ${telefone}\n*Serviço:* ${servico}\n*Data:* ${data}\n*Horário:* ${hora}\n`;
+            if (observacoes) {
+                mensagem += `*Observações:* ${observacoes}\n`;
+            }
+            
+            const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+            
+            window.open(urlWhatsApp, '_blank');
+            
+            // Limpar formulário
+            bookingForm.reset();
+        });
+        
+        // Configurar data mínima para o campo de data (hoje)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('data').min = today;
+        
+        // Animação ao rolar a página
+        window.addEventListener('scroll', revealOnScroll);
+        
+        function revealOnScroll() {
+            const elements = document.querySelectorAll('.service-card, .about-image img, .booking-form, .contact-form');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (elementPosition < windowHeight - revealPoint) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        // Inicializar animações
+        window.addEventListener('load', () => {
+            revealOnScroll();
+            
+            // Adicionar classe active após um pequeno delay para as animações iniciais
+            setTimeout(() => {
+                document.querySelectorAll('.service-card, .about-image img, .booking-form, .contact-form').forEach(el => {
+                    el.classList.add('active');
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
